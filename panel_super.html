@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel del Validador</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Panel del Validador</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Cerrar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+
+    <h2 class="mb-3">Reportes Pendientes</h2>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Accidente en la Duarte</td>
+            <td>Accidente</td>
+            <td>
+              <button class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalDetalle">Ver y Validar</button>
+              <button class="btn btn-danger btn-sm">Rechazar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Inundación en Santiago</td>
+            <td>Clima</td>
+            <td>
+              <button class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalDetalle">Ver y Validar</button>
+              <button class="btn btn-danger btn-sm">Rechazar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="mt-5 mb-3">Unir Reportes Similares</h2>
+    <form>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="rep1" />
+        <label class="form-check-label" for="rep1">Accidente en la Duarte</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="rep2" />
+        <label class="form-check-label" for="rep2">Accidente en la Av. Luperón</label>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">Unir Seleccionados</button>
+    </form>
+
+    <h2 class="mt-5 mb-3">Estadísticas de Incidencias</h2>
+    <canvas id="graficoIncidencias" height="100"></canvas>
+  </div>
+
+  <div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="modalDetalleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDetalleLabel">Detalle del Reporte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+
+          <p><strong>Título:</strong> Accidente en la Duarte</p>
+          <p><strong>Tipo:</strong> Accidente</p>
+          <p><strong>Descripción:</strong> Choque múltiple en la Duarte con varios heridos.</p>
+          <p><strong>Provincia:</strong> Santo Domingo</p>
+          <p><strong>Municipio:</strong> Distrito Nacional</p>
+          <p><strong>Muertos:</strong> 2</p>
+          <p><strong>Heridos:</strong> 5</p>
+          <p><strong>Pérdida estimada (RD$):</strong> 150000</p>
+          <p><strong>Coordenadas:</strong> 18.4763, -69.9312</p>
+
+          <hr />
+
+          <h6>Comentarios Públicos</h6>
+          <ul>
+            <li>Usuario1: Muy grave, espero que tomen medidas.</li>
+            <li>Usuario2: Hubo más heridos, por favor revisar.</li>
+          </ul>
+
+          <hr />
+
+          <h6>Correcciones Sugeridas</h6>
+          <form id="formCorrecciones">
+            <div class="mb-3">
+              <label for="corregirMuertos" class="form-label">Muertos (actual: 2)</label>
+              <input type="number" class="form-control" id="corregirMuertos" min="0" value="3" />
+            </div>
+            <div class="mb-3">
+              <label for="corregirHeridos" class="form-label">Heridos (actual: 5)</label>
+              <input type="number" class="form-control" id="corregirHeridos" min="0" value="6" />
+            </div>
+            <div class="mb-3">
+              <label for="corregirProvincia" class="form-label">Provincia (actual: Santo Domingo)</label>
+              <input type="text" class="form-control" id="corregirProvincia" value="Santo Domingo" />
+            </div>
+            <div class="mb-3">
+              <label for="corregirMunicipio" class="form-label">Municipio (actual: Distrito Nacional)</label>
+              <input type="text" class="form-control" id="corregirMunicipio" value="Distrito Nacional" />
+            </div>
+            <div class="mb-3">
+              <label for="corregirPerdida" class="form-label">Pérdida estimada (actual: 150000)</label>
+              <input type="number" class="form-control" id="corregirPerdida" min="0" value="160000" step="1000" />
+            </div>
+            <div class="mb-3">
+              <label for="corregirCoordenadas" class="form-label">Coordenadas (actual: 18.4763, -69.9312)</label>
+              <input type="text" class="form-control" id="corregirCoordenadas" value="18.4765, -69.9310" />
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Rechazar Corrección</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aprobar Corrección</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('graficoIncidencias').getContext('2d');
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Accidente', 'Clima', 'Incendio'],
+        datasets: [{
+          data: [12, 7, 3],
+          backgroundColor: ['#dc3545', '#0d6efd', '#fd7e14']
+        }]
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
